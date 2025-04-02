@@ -50,5 +50,3 @@ def show_ranking(scores, mvp_counter):
         points = scores[player]
         mvps = mvp_counter.get(player, 0)
         print(f'{player:<7} | {points} | {mvps}') 
-    
-    

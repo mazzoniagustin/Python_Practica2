@@ -3,12 +3,15 @@ def calculate_points (player):
     return (player["kills"] * 3) + (player["assists"] * 1) - (1 if player["deaths"] else 0)
 
 def calculate_score (rounds):
-    """This function shows every round and calculates the Most Valuable Player(MVP) and the total score of the game."""
+    """
+    Show each round, calculate the Most Valuable Player (MVP),
+    and compute the total game score.
+    """
     scores = {}
     mvp_counter = {}
     
     for i, round in enumerate(rounds):
-        print (f'---- RONDA {i+1} ----')
+        print (f'---- RONDA {i + 1} ----')
         
         round_score = {}
         
@@ -16,14 +19,14 @@ def calculate_score (rounds):
             stats = round[player]
             score = calculate_points(stats)
             round_score[player] = score
-            scores[player] = scores.get(player,0) + score     
+            scores[player] = scores.get(player, 0) + score     
             
         
         descendant_players = sorted(round_score.keys(), key= lambda player: round_score[player],reverse=True) 
         
         
         mvp = descendant_players[0] # El MVP siempre va a ser el primero al estar ordenada.
-        mvp_counter[mvp] = mvp_counter.get(mvp,0) + 1
+        mvp_counter[mvp] = mvp_counter.get(mvp, 0) + 1
         
         
         for player in descendant_players:
@@ -45,7 +48,7 @@ def show_ranking(scores, mvp_counter):
     
     for player in descendant_players:
         points = scores[player]
-        mvps = mvp_counter.get(player,0)
+        mvps = mvp_counter.get(player, 0)
         print(f'{player:<7} | {points} | {mvps}') 
     
     

@@ -1,1 +1,1 @@
-jupyter notebook == 7.3.3
+jupyter == 7.3.3

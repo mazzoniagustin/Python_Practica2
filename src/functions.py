@@ -1,12 +1,9 @@
-def calculate_points (player):
+def calculate_points (stats):
     """This function calculates the points of every player"""
-    return (player["kills"] * 3) + (player["assists"] * 1) - (1 if player["deaths"] else 0)
+    return (stats["kills"] * 3) + (stats["assists"] * 1) - (1 if stats["deaths"] else 0)
 
 def calculate_score (rounds):
-    """
-    Show each round, calculate the Most Valuable Player (MVP),
-    and compute the total game score.
-    """
+    """ This functions calculate the score of each player every round"""
     scores = {}
     mvp_counter = {}
     total_stats = {}
@@ -18,10 +15,12 @@ def calculate_score (rounds):
         round_stats = {}
         
         for player in round:
-            stats = round[player]
+            stats = round[player] # Diccionario dentro de diccionario.
             score = calculate_points(stats)
-            round_score[player] = score
-            scores[player] = scores.get(player, 0) + score     
+            round_score[player] = score # Score de la ronda
+            if player not in scores:
+                scores[player] = 0
+            scores[player] += score
             
             round_stats[player] = {
                 "kills": stats["kills"],
@@ -35,11 +34,13 @@ def calculate_score (rounds):
             total_stats[player]["deaths"] += stats["deaths"]
             total_stats[player]["assists"] += stats["assists"]
         
-        descendant_players = sorted(round_score.keys(), key= lambda player: round_score[player],reverse=True) 
+        descendant_players = sorted(round_score, key= lambda player: round_score[player],reverse=True) 
         
         
         mvp = descendant_players[0] # El MVP siempre va a ser el primero al estar ordenada.
-        mvp_counter[mvp] = mvp_counter.get(mvp, 0) + 1
+        if mvp not in mvp_counter:
+            mvp_counter[mvp] = 0
+        mvp_counter[mvp] += 1
         
         print ("Jugador | Puntos | Kills | Asistencias | Muertes")
         print ("--------------------------------------------------")
@@ -64,6 +65,9 @@ def show_ranking(scores, mvp_counter, total_stats):
     
     for player in descendant_players:
         points = scores[player]
-        mvps = mvp_counter.get(player, 0)
+        if player not in mvp_counter:
+            mvps = 0
+        else:
+            mvps = mvp_counter[player]
         player_stats = total_stats[player]
         print (f'{player:<7} | {points:<6} | {player_stats["kills"]:<5} | {player_stats["assists"]:<11} | {player_stats["deaths"]:<7} | {mvps:<4}') 

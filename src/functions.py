@@ -47,17 +47,17 @@ def calculate_score (rounds):
         for player in descendant_players:
             score = round_score[player]
             player_stats = round_stats[player]
-            print (f'{player:<7} | {score} | {player_stats["kills"]} | {player_stats["assists"]} | {player_stats["deaths"]} \n')
-            
+            print (f'{player:<7} | {score:<6} | {player_stats["kills"]:<5} | {player_stats["assists"]:<11} | {player_stats["deaths"]}')
+        print ('')
         print(f'MVP de la ronda: {mvp} con {round_score[mvp]} puntos. \n')
         
     return scores, mvp_counter, total_stats
 
 def show_ranking(scores, mvp_counter, total_stats):
     """This functions sort and show the final scoreboard of the game."""
-    print ('---- Scoreboard Final ----')
+    print ('------------------  Scoreboard Final -------------------')
     print ('Jugador | Puntos | Kills | Asistencias | Muertes | MVPs')
-    print ('-' * 45)
+    print ('-' * 55)
     
     # Se ordena de menor a mayor la acumulada.
     descendant_players = sorted(scores.keys(), key= lambda player: scores[player],reverse=True) 
@@ -66,4 +66,4 @@ def show_ranking(scores, mvp_counter, total_stats):
         points = scores[player]
         mvps = mvp_counter.get(player, 0)
         player_stats = total_stats[player]
-        print (f'{player:<7} | {points} | {player_stats["kills"]} | {player_stats["assists"]} | {player_stats["deaths"]} | {mvps}') 
+        print (f'{player:<7} | {points:<6} | {player_stats["kills"]:<5} | {player_stats["assists"]:<11} | {player_stats["deaths"]:<7} | {mvps:<4}') 
